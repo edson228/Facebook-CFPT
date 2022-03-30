@@ -1,8 +1,8 @@
 <?php
-// require ('./config/connexion.php');
-include('./config/var.php');
+require('./config/config.php');
+//include('./config/var.php');
 
-$msg = "";
+/*$msg = "";
 
 if (isset($_POST['showPost'])) {
     $filename = $_FILES["postPhoto"]["name"];
@@ -20,9 +20,9 @@ if (isset($_POST['showPost'])) {
         $msg = "Failed to upload image";
     }
 }
-$result = mysqli_query($db, "SELECT * FROM media");
+$result = mysqli_query(connexion(), "SELECT * FROM media");
 while ($data = mysqli_fetch_array($result)) {
-
+*/
 
 
     // $msg = stripslashes(htmlspecialchars($_REQUEST['msg']));
@@ -48,7 +48,7 @@ while ($data = mysqli_fetch_array($result)) {
 ?>
     <img src="<?php echo $data['Filename']; ?>">
 <?php
-}
+//}
 ?>
 
 <!doctype html>
@@ -169,32 +169,57 @@ while ($data = mysqli_fetch_array($result)) {
 
         </main>
 
-        <div class="form-group">
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                <label class="control-label" for="Tittel"><b>Tittel</b></label>
-                <input type="text" class="form-control" id="Tittel" name="Tittel">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3">
-                <label class="control-label" for="Info"><b>Info</b></label>
-                <textarea type="text" class="form-control" id="Info" name="Info"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3">
-                <label class="control-label" for="Bilde"><b>Bilde</b></label>
-                <input type="file" class="form-control-file" id="Bilde" name="Bilde">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary" name="Legg_Kurs" value="Submit" method="post" href="index.php">Legg til...</button>
+        <?php
+        if(isset($_POST["commentaire"]) && isset($_FILES["image"])){
+          if (addNewPost($_POST["commentaire"], $_FILES['image']['name'],$_FILES['image']['type'],base64_encode(file_get_contents($_FILES['image']['tmp_name'], FILE_USE_INCLUDE_PATH))) == false)
+          {
+            echo "c'est pas bon";
+          }
 
+          echo "<div class='row'>";
+          echo"  <div class='col-sm-12'>";
+          echo"    <div class='panel panel-default text-left'>";
+          echo"      <div class='panel-body'>";
+          echo"        <p contenteditable='true'>Status: ".$_POST["commentaire"]."</p>";
+          echo"        <button type='button' class='btn btn-default btn-sm'>";
+          echo"          <span class='glyphicon glyphicon-thumbs-up'></span> Like";
+          echo"<img src='". file_get_contents($_FILES['image']['tmp_name'])."' class='img-circle' height='55' width='55'>";
+          echo"        </button>";     
+          echo"      </div>";
+          echo"    </div>";
+          echo"  </div>";
+          echo"</div>";
+      
+
+
+         }else{
+          echo "echec";
+        }
+      ?>
+
+        <form action="" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="col-sm-3">
+                <label class="control-label" for="Info"><b>Commentaire</b></label>
+                <textarea type="text" class="form-control" id="commentaire" name="commentaire"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <label class="control-label" for="image"><b>Image</b></label>
+                <input type="hidden" name="MAX_FILE_SIZE" value="4000000">
+                <input type="file" class="form-control-file" id="image" name="image" accept=".jpg,.png,.pdf"> 
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" name="submit" value="submit" method="post" >Envoyer</button>
+        </form>
         <footer class="mt-auto text-white-50">
 
         </footer>
     </div>
 
     <script>
+        /*
         function submitChat() {
             var file = document.getElementById("postPhoto");
             var formData = new FormData();
@@ -223,7 +248,7 @@ while ($data = mysqli_fetch_array($result)) {
             xmlhttp.send(formData);
 
 
-        }
+        }*/
     </script>
 
     <!-- <script>
