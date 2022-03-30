@@ -1,5 +1,6 @@
 <?php
     define("HOST", "localhost");
-    define("DBNAME", "dbfacebook");
-    define("USER", "userfb");
-    define("PWD", "Super");
+    define("PORT", "3306");
+    define("DBNAME", "db_facebook");
+    define("USER", "db_facebook");
+    define("PWD", "");
