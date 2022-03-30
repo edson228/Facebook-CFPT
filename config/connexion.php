@@ -12,7 +12,7 @@ function connexion()
         // Essaye le code ci-dessous
         try 
         {
-            $dbc = new PDO("mysql:host=". HOST . '; port=3307; dbname='. DBNAME, USER, PWD, array(
+            $dbc = new PDO("mysql:host=". HOST . "; port=". PORT. '; dbname='. DBNAME, USER, PWD, array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
                 PDO::ATTR_PERSISTENT => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
